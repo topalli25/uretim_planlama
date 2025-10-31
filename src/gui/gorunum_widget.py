@@ -12,51 +12,35 @@ class GorunumWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        try:
-            # Ana layout
-            self.layout = QVBoxLayout(self)
-            self.layout.setContentsMargins(0, 0, 0, 0)
+        # Ana layout
+        self.layout = QVBoxLayout(self)
+        self.layout.setContentsMargins(0, 0, 0, 0)
 
-            # VTK widget
-            print("   [DEBUG] QVTKRenderWindowInteractor oluşturuluyor...")
-            self.vtk_widget = QVTKRenderWindowInteractor(self)
-            self.layout.addWidget(self.vtk_widget)
-            print("   [DEBUG] VTK widget eklendi")
+        # VTK widget
+        self.vtk_widget = QVTKRenderWindowInteractor(self)
+        self.layout.addWidget(self.vtk_widget)
 
-            # Renderer
-            print("   [DEBUG] Renderer oluşturuluyor...")
-            self.renderer = vtk.vtkRenderer()
-            self.renderer.SetBackground(0.2, 0.3, 0.4)  # Arka plan rengi
+        # Renderer
+        self.renderer = vtk.vtkRenderer()
+        self.renderer.SetBackground(0.2, 0.3, 0.4)  # Arka plan rengi
 
-            # Render window
-            print("   [DEBUG] Render window alınıyor...")
-            self.render_window = self.vtk_widget.GetRenderWindow()
-            self.render_window.AddRenderer(self.renderer)
+        # Render window
+        self.render_window = self.vtk_widget.GetRenderWindow()
+        self.render_window.AddRenderer(self.renderer)
 
-            # Interactor
-            print("   [DEBUG] Interactor ayarlanıyor...")
-            self.interactor = self.render_window.GetInteractor()
-            self.interactor_stili = vtk.vtkInteractorStyleTrackballCamera()
-            self.interactor.SetInteractorStyle(self.interactor_stili)
+        # Interactor
+        self.interactor = self.render_window.GetInteractor()
+        self.interactor_stili = vtk.vtkInteractorStyleTrackballCamera()
+        self.interactor.SetInteractorStyle(self.interactor_stili)
 
-            # Aktörler sözlüğü (parca_id: actor)
-            self.aktorler = {}
+        # Aktörler sözlüğü (parca_id: actor)
+        self.aktorler = {}
 
-            # Kamera ayarları
-            print("   [DEBUG] Kamera ayarlanıyor...")
-            self.kamerayi_ayarla()
+        # Kamera ayarları
+        self.kamerayi_ayarla()
 
-            # Initialize
-            print("   [DEBUG] Interactor Initialize ediliyor...")
-            self.interactor.Initialize()
-            print("   [DEBUG] GorunumWidget başarıyla oluşturuldu")
-
-        except Exception as e:
-            print(f"\n   [HATA] GorunumWidget oluşturulurken hata:")
-            print(f"   [HATA] {type(e).__name__}: {e}")
-            import traceback
-            traceback.print_exc()
-            raise
+        # Initialize
+        self.interactor.Initialize()
 
     def kamerayi_ayarla(self):
         """Kamera başlangıç ayarları"""
