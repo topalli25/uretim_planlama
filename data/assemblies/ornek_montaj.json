@@ -1,39 +1,39 @@
 {
   "isim": "Örnek Montaj Projesi",
-  "aciklama": "5 parçalı basit montaj örneği - Test amaçlı (STEP formatı)",
+  "aciklama": "5 parçalı basit montaj örneği - Test amaçlı (STL formatı - Gerçek projede STEP kullanın)",
   "parcalar": [
     {
       "id": "parca_001",
       "isim": "Taban",
-      "model_dosyasi": "taban.step",
+      "model_dosyasi": "taban.stl",
       "renk": [0.7, 0.7, 0.7],
       "gorunur": true
     },
     {
       "id": "parca_002",
       "isim": "Gövde",
-      "model_dosyasi": "govde.step",
+      "model_dosyasi": "govde.stl",
       "renk": [0.2, 0.6, 1.0],
       "gorunur": true
     },
     {
       "id": "parca_003",
       "isim": "Kapak",
-      "model_dosyasi": "kapak.step",
+      "model_dosyasi": "kapak.stl",
       "renk": [1.0, 0.2, 0.2],
       "gorunur": true
     },
     {
       "id": "parca_004",
       "isim": "Destek 1",
-      "model_dosyasi": "destek_1.step",
+      "model_dosyasi": "destek_1.stl",
       "renk": [0.2, 0.8, 0.2],
       "gorunur": true
     },
     {
       "id": "parca_005",
       "isim": "Destek 2",
-      "model_dosyasi": "destek_2.step",
+      "model_dosyasi": "destek_2.stl",
       "renk": [0.2, 0.8, 0.2],
       "gorunur": true
     }
