@@ -50,13 +50,13 @@ pip install -r requirements.txt
 
 **Not:** VTK kurulumu biraz zaman alabilir (500MB+).
 
-### 5. Örnek STL Dosyalarını Oluşturun
+### 5. Örnek STEP Dosyalarını Oluşturun
 
 ```bash
 python tests/create_sample_models.py
 ```
 
-Bu komut `data/models/` klasörüne 5 adet örnek STL dosyası oluşturacak.
+Bu komut `data/models/` klasörüne 5 adet örnek STEP dosyası (ve yedek STL) oluşturacak.
 
 ### 6. Uygulamayı Çalıştırın
 
@@ -74,36 +74,39 @@ python main.py
 
 ## Kendi Montajınızı Oluşturma
 
-### 1. STL Dosyalarını Ekleyin
+### 1. STEP Dosyalarını Ekleyin
 
-SolidWorks'ten parçalarınızı STL formatında export edin ve `data/models/` klasörüne kopyalayın.
+SolidWorks'ten parçalarınızı **STEP formatında** export edin ve `data/models/` klasörüne kopyalayın.
 
-### 2. Montaj JSON Dosyası Oluşturun
+**Önerilen:** STEP formatı (.step veya .stp) - daha zengin geometri bilgisi
+**Alternatif:** STL formatı (.stl) - basit mesh formatı
+
+### 2. Montaj JSON Dosyası Oluşturun (Türkçe Anahtarlar)
 
 `data/assemblies/` klasöründe yeni bir JSON dosyası oluşturun:
 
 ```json
 {
-  "name": "Kendi Montajım",
-  "description": "Açıklama",
-  "parts": [
+  "isim": "Kendi Montajım",
+  "aciklama": "Açıklama",
+  "parcalar": [
     {
-      "id": "part_001",
-      "name": "Parça Adı",
-      "model_file": "parca.stl",
-      "color": [0.8, 0.8, 0.8],
-      "visible": true
+      "id": "parca_001",
+      "isim": "Parça Adı",
+      "model_dosyasi": "parca.step",
+      "renk": [0.8, 0.8, 0.8],
+      "gorunur": true
     }
   ],
-  "steps": [
+  "adimlar": [
     {
-      "step_number": 1,
-      "title": "Adım 1",
-      "description": "Adım açıklaması",
-      "visible_parts": ["part_001"],
-      "highlight_parts": ["part_001"],
-      "camera_position": [100, 100, 100],
-      "duration": 60
+      "adim_numarasi": 1,
+      "baslik": "Adım 1",
+      "aciklama": "Adım açıklaması",
+      "gorunur_parcalar": ["parca_001"],
+      "vurgulu_parcalar": ["parca_001"],
+      "kamera_pozisyonu": [100, 100, 100],
+      "sure": 60
     }
   ]
 }
@@ -142,11 +145,14 @@ which python  # Linux/Mac
 where python  # Windows
 ```
 
-### STL Dosyaları Yüklenmiyor
+### STEP/STL Dosyaları Yüklenmiyor
 
 - Dosya yollarının doğru olduğundan emin olun
+- STEP dosyaları için `.step` veya `.stp` uzantısı kullanın
 - STL dosyalarının binary veya ASCII formatında olduğunu kontrol edin
-- SolidWorks'ten export ederken "Binary" STL seçin (daha küçük dosya)
+- SolidWorks'ten export ederken:
+  - **STEP:** AP214 veya AP203 formatı seçin
+  - **STL:** "Binary" STL seçin (daha küçük dosya)
 
 ## Kiosk Modu
 
@@ -159,10 +165,13 @@ Tam ekran kiosk modu için:
 ## Performans İpuçları
 
 1000+ parça için:
-- STL dosyalarını binary formatında kaydedin
+- **STEP formatı kullanın** - daha optimize geometri
 - Parça sayısını azaltmak için alt montajları birleştirin
+- SolidWorks'te parçaları basitleştirin (küçük detayları kaldırın)
 - Çok detaylı mesh'leri basitleştirin (Decimate)
 - `config.json`'da antialiasing'i kapatın: `"enable_antialiasing": false`
+
+**Not:** VTK native performans sağlar, bu nedenle 1000+ parça için web tabanlı çözümlerden çok daha hızlıdır.
 
 ## Klavye Kısayolları
 

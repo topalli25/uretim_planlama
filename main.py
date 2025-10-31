@@ -5,22 +5,22 @@ Ana giriş noktası
 """
 import sys
 from PyQt6.QtWidgets import QApplication
-from src.gui.main_window import MainWindow
+from src.gui.ana_pencere import AnaPencere
 
 
 def main():
     """Ana fonksiyon"""
     # Qt uygulaması
-    app = QApplication(sys.argv)
-    app.setApplicationName("3D Montaj Kılavuzu")
-    app.setOrganizationName("Üretim Planlama")
+    uygulama = QApplication(sys.argv)
+    uygulama.setApplicationName("3D Montaj Kılavuzu")
+    uygulama.setOrganizationName("Üretim Planlama")
 
     # Ana pencere
-    window = MainWindow()
-    window.show()
+    pencere = AnaPencere()
+    pencere.show()
 
     # Uygulama döngüsü
-    sys.exit(app.exec())
+    sys.exit(uygulama.exec())
 
 
 if __name__ == '__main__':

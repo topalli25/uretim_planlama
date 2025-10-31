@@ -1,88 +1,88 @@
 {
-  "name": "Örnek Montaj Projesi",
-  "description": "5 parçalı basit montaj örneği - Test amaçlı",
-  "parts": [
+  "isim": "Örnek Montaj Projesi",
+  "aciklama": "5 parçalı basit montaj örneği - Test amaçlı (STEP formatı)",
+  "parcalar": [
     {
-      "id": "part_001",
-      "name": "Taban",
-      "model_file": "taban.stl",
-      "color": [0.7, 0.7, 0.7],
-      "visible": true
+      "id": "parca_001",
+      "isim": "Taban",
+      "model_dosyasi": "taban.step",
+      "renk": [0.7, 0.7, 0.7],
+      "gorunur": true
     },
     {
-      "id": "part_002",
-      "name": "Gövde",
-      "model_file": "govde.stl",
-      "color": [0.2, 0.6, 1.0],
-      "visible": true
+      "id": "parca_002",
+      "isim": "Gövde",
+      "model_dosyasi": "govde.step",
+      "renk": [0.2, 0.6, 1.0],
+      "gorunur": true
     },
     {
-      "id": "part_003",
-      "name": "Kapak",
-      "model_file": "kapak.stl",
-      "color": [1.0, 0.2, 0.2],
-      "visible": true
+      "id": "parca_003",
+      "isim": "Kapak",
+      "model_dosyasi": "kapak.step",
+      "renk": [1.0, 0.2, 0.2],
+      "gorunur": true
     },
     {
-      "id": "part_004",
-      "name": "Destek 1",
-      "model_file": "destek_1.stl",
-      "color": [0.2, 0.8, 0.2],
-      "visible": true
+      "id": "parca_004",
+      "isim": "Destek 1",
+      "model_dosyasi": "destek_1.step",
+      "renk": [0.2, 0.8, 0.2],
+      "gorunur": true
     },
     {
-      "id": "part_005",
-      "name": "Destek 2",
-      "model_file": "destek_2.stl",
-      "color": [0.2, 0.8, 0.2],
-      "visible": true
+      "id": "parca_005",
+      "isim": "Destek 2",
+      "model_dosyasi": "destek_2.step",
+      "renk": [0.2, 0.8, 0.2],
+      "gorunur": true
     }
   ],
-  "steps": [
+  "adimlar": [
     {
-      "step_number": 1,
-      "title": "Adım 1: Tabanı Yerleştir",
-      "description": "Taban parçasını iş tezgahına yerleştirin. Taban montajın temelini oluşturur ve diğer tüm parçalar bunun üzerine monte edilecektir.\n\nDikkat edilmesi gerekenler:\n- Tabanın düz yüzeyinin aşağı bakmasına dikkat edin\n- Tezgaha tam oturduğundan emin olun",
-      "visible_parts": ["part_001"],
-      "highlight_parts": ["part_001"],
-      "camera_position": [80, 80, 60],
-      "duration": 30
+      "adim_numarasi": 1,
+      "baslik": "Adım 1: Tabanı Yerleştir",
+      "aciklama": "Taban parçasını iş tezgahına yerleştirin. Taban montajın temelini oluşturur ve diğer tüm parçalar bunun üzerine monte edilecektir.\n\nDikkat edilmesi gerekenler:\n- Tabanın düz yüzeyinin aşağı bakmasına dikkat edin\n- Tezgaha tam oturduğundan emin olun",
+      "gorunur_parcalar": ["parca_001"],
+      "vurgulu_parcalar": ["parca_001"],
+      "kamera_pozisyonu": [80, 80, 60],
+      "sure": 30
     },
     {
-      "step_number": 2,
-      "title": "Adım 2: Gövdeyi Monte Edin",
-      "description": "Gövde parçasını (mavi silindir) taban üzerine yerleştirin. Gövdenin merkezi taban ile aynı hizada olmalıdır.\n\nMontaj için:\n- Gövdeyi tabana dik olarak yerleştirin\n- Alt kısmın taban ile tam temas ettiğinden emin olun\n- 4 adet M6x20 cıvata ile sabitleyin (her köşeden)",
-      "visible_parts": ["part_001", "part_002"],
-      "highlight_parts": ["part_002"],
-      "camera_position": [100, 50, 80],
-      "duration": 60
+      "adim_numarasi": 2,
+      "baslik": "Adım 2: Gövdeyi Monte Edin",
+      "aciklama": "Gövde parçasını (mavi silindir) taban üzerine yerleştirin. Gövdenin merkezi taban ile aynı hizada olmalıdır.\n\nMontaj için:\n- Gövdeyi tabana dik olarak yerleştirin\n- Alt kısmın taban ile tam temas ettiğinden emin olun\n- 4 adet M6x20 cıvata ile sabitleyin (her köşeden)",
+      "gorunur_parcalar": ["parca_001", "parca_002"],
+      "vurgulu_parcalar": ["parca_002"],
+      "kamera_pozisyonu": [100, 50, 80],
+      "sure": 60
     },
     {
-      "step_number": 3,
-      "title": "Adım 3: Destek Parçalarını Ekleyin",
-      "description": "İki destek parçasını (yeşil dikdörtgen prizmalar) gövdenin iki yanına monte edin. Bu parçalar yapıya ek dayanıklılık sağlar.\n\nMontaj sırası:\n1. Önce Destek 1'i (sağ ön köşe) yerleştirin\n2. Sonra Destek 2'yi (sol arka köşe) yerleştirin\n3. Her birini 2 adet M4x15 cıvata ile sabitleyin",
-      "visible_parts": ["part_001", "part_002", "part_004", "part_005"],
-      "highlight_parts": ["part_004", "part_005"],
-      "camera_position": [120, 120, 100],
-      "duration": 90
+      "adim_numarasi": 3,
+      "baslik": "Adım 3: Destek Parçalarını Ekleyin",
+      "aciklama": "İki destek parçasını (yeşil dikdörtgen prizmalar) gövdenin iki yanına monte edin. Bu parçalar yapıya ek dayanıklılık sağlar.\n\nMontaj sırası:\n1. Önce Destek 1'i (sağ ön köşe) yerleştirin\n2. Sonra Destek 2'yi (sol arka köşe) yerleştirin\n3. Her birini 2 adet M4x15 cıvata ile sabitleyin",
+      "gorunur_parcalar": ["parca_001", "parca_002", "parca_004", "parca_005"],
+      "vurgulu_parcalar": ["parca_004", "parca_005"],
+      "kamera_pozisyonu": [120, 120, 100],
+      "sure": 90
     },
     {
-      "step_number": 4,
-      "title": "Adım 4: Kapağı Kapatın",
-      "description": "Son olarak kapak parçasını (kırmızı küre) gövdenin üst kısmına yerleştirin. Kapak montajın üst kısmını kapatır ve içeriği korur.\n\nSon kontroller:\n- Kapağın gövde ile tam oturduğundan emin olun\n- 6 adet M3x10 cıvata ile dairesel olarak sabitleyin\n- Tüm cıvataların sıkılığını kontrol edin",
-      "visible_parts": ["part_001", "part_002", "part_003", "part_004", "part_005"],
-      "highlight_parts": ["part_003"],
-      "camera_position": [80, -80, 120],
-      "duration": 45
+      "adim_numarasi": 4,
+      "baslik": "Adım 4: Kapağı Kapatın",
+      "aciklama": "Son olarak kapak parçasını (kırmızı küre) gövdenin üst kısmına yerleştirin. Kapak montajın üst kısmını kapatır ve içeriği korur.\n\nSon kontroller:\n- Kapağın gövde ile tam oturduğundan emin olun\n- 6 adet M3x10 cıvata ile dairesel olarak sabitleyin\n- Tüm cıvataların sıkılığını kontrol edin",
+      "gorunur_parcalar": ["parca_001", "parca_002", "parca_003", "parca_004", "parca_005"],
+      "vurgulu_parcalar": ["parca_003"],
+      "kamera_pozisyonu": [80, -80, 120],
+      "sure": 45
     },
     {
-      "step_number": 5,
-      "title": "Adım 5: Montaj Tamamlandı",
-      "description": "Tebrikler! Montaj başarıyla tamamlandı.\n\nSon kontrol listesi:\n✓ Tüm parçalar yerinde mi?\n✓ Tüm cıvatallar sıkı mı?\n✓ Görsel olarak düzgün mü?\n✓ Parçalar arasında boşluk var mı?\n\nMontaj tamamlandıktan sonra kalite kontrol için ürünü ilgili departmana gönderin.",
-      "visible_parts": ["part_001", "part_002", "part_003", "part_004", "part_005"],
-      "highlight_parts": [],
-      "camera_position": [150, 150, 150],
-      "duration": 60
+      "adim_numarasi": 5,
+      "baslik": "Adım 5: Montaj Tamamlandı",
+      "aciklama": "Tebrikler! Montaj başarıyla tamamlandı.\n\nSon kontrol listesi:\n✓ Tüm parçalar yerinde mi?\n✓ Tüm cıvatallar sıkı mı?\n✓ Görsel olarak düzgün mü?\n✓ Parçalar arasında boşluk var mı?\n\nMontaj tamamlandıktan sonra kalite kontrol için ürünü ilgili departmana gönderin.",
+      "gorunur_parcalar": ["parca_001", "parca_002", "parca_003", "parca_004", "parca_005"],
+      "vurgulu_parcalar": [],
+      "kamera_pozisyonu": [150, 150, 150],
+      "sure": 60
     }
   ]
 }
