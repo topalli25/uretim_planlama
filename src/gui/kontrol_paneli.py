@@ -1,5 +1,5 @@
 """
-Montaj adımlarını kontrol eden panel
+Montaj adimlarini kontrol eden panel
 """
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
                              QLabel, QTextEdit, QListWidget, QProgressBar,
@@ -11,39 +11,39 @@ class KontrolPaneli(QWidget):
     """Montaj kontrol paneli"""
 
     # Signals
-    adim_degisti = pyqtSignal(int)  # Adım değiştiğinde
-    parca_secildi = pyqtSignal(str)  # Parça seçildiğinde
+    adim_degisti = pyqtSignal(int)  # Adim degistiginde
+    parca_secildi = pyqtSignal(str)  # Parca secildiginde
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.arayuzu_olustur()
 
     def arayuzu_olustur(self):
-        """UI elemanlarını oluştur"""
+        """UI elemanlarini olustur"""
         layout = QVBoxLayout(self)
 
-        # Başlık
-        baslik = QLabel("Montaj Adımları")
+        # Baslik
+        baslik = QLabel("Montaj Adimlari")
         baslik.setStyleSheet("font-size: 18px; font-weight: bold;")
         layout.addWidget(baslik)
 
-        # İlerleme çubuğu
-        ilerleme_grubu = QGroupBox("İlerleme")
+        # Ilerleme cubugu
+        ilerleme_grubu = QGroupBox("Ilerleme")
         ilerleme_layout = QVBoxLayout()
         self.ilerleme_cubugu = QProgressBar()
         self.ilerleme_cubugu.setMinimum(0)
         self.ilerleme_cubugu.setMaximum(100)
-        self.ilerleme_etiketi = QLabel("Adım 0 / 0")
+        self.ilerleme_etiketi = QLabel("Adim 0 / 0")
         ilerleme_layout.addWidget(self.ilerleme_cubugu)
         ilerleme_layout.addWidget(self.ilerleme_etiketi)
         ilerleme_grubu.setLayout(ilerleme_layout)
         layout.addWidget(ilerleme_grubu)
 
-        # Mevcut adım bilgisi
-        adim_grubu = QGroupBox("Mevcut Adım")
+        # Mevcut adim bilgisi
+        adim_grubu = QGroupBox("Mevcut Adim")
         adim_layout = QVBoxLayout()
 
-        self.adim_basligi = QLabel("Adım başlığı")
+        self.adim_basligi = QLabel("Adim basligi")
         self.adim_basligi.setStyleSheet("font-size: 14px; font-weight: bold;")
         self.adim_basligi.setWordWrap(True)
 
@@ -56,18 +56,18 @@ class KontrolPaneli(QWidget):
         adim_grubu.setLayout(adim_layout)
         layout.addWidget(adim_grubu)
 
-        # Navigasyon butonları
+        # Navigasyon butonlari
         nav_layout = QHBoxLayout()
 
-        self.btn_ilk = QPushButton("⏮ İlk")
-        self.btn_onceki = QPushButton("◀ Önceki")
+        self.btn_ilk = QPushButton("⏮ Ilk")
+        self.btn_onceki = QPushButton("◀ Onceki")
         self.btn_sonraki = QPushButton("Sonraki ▶")
         self.btn_son = QPushButton("Son ⏭")
 
-        self.btn_ilk.clicked.connect(self.ilk_tiklandı)
-        self.btn_onceki.clicked.connect(self.onceki_tiklandı)
-        self.btn_sonraki.clicked.connect(self.sonraki_tiklandı)
-        self.btn_son.clicked.connect(self.son_tiklandı)
+        self.btn_ilk.clicked.connect(self.ilk_tiklandi)
+        self.btn_onceki.clicked.connect(self.onceki_tiklandi)
+        self.btn_sonraki.clicked.connect(self.sonraki_tiklandi)
+        self.btn_son.clicked.connect(self.son_tiklandi)
 
         nav_layout.addWidget(self.btn_ilk)
         nav_layout.addWidget(self.btn_onceki)
@@ -76,8 +76,8 @@ class KontrolPaneli(QWidget):
 
         layout.addLayout(nav_layout)
 
-        # Adım listesi
-        adimlar_grubu = QGroupBox("Tüm Adımlar")
+        # Adim listesi
+        adimlar_grubu = QGroupBox("Tum Adimlar")
         adimlar_layout = QVBoxLayout()
         self.adimlar_listesi = QListWidget()
         self.adimlar_listesi.currentRowChanged.connect(self.adim_listesi_degisti)
@@ -85,8 +85,8 @@ class KontrolPaneli(QWidget):
         adimlar_grubu.setLayout(adimlar_layout)
         layout.addWidget(adimlar_grubu)
 
-        # Parça listesi
-        parcalar_grubu = QGroupBox("Parçalar")
+        # Parca listesi
+        parcalar_grubu = QGroupBox("Parcalar")
         parcalar_layout = QVBoxLayout()
         self.parcalar_listesi = QListWidget()
         self.parcalar_listesi.currentTextChanged.connect(self.parca_secildi_slot)
@@ -99,75 +99,75 @@ class KontrolPaneli(QWidget):
 
     def adim_bilgisini_guncelle(self, adim, mevcut_indeks, toplam_adim):
         """
-        Adım bilgilerini güncelle
+        Adim bilgilerini guncelle
 
         Args:
-            adim (dict): Adım bilgisi
-            mevcut_indeks (int): Mevcut adım indexi (0-based)
-            toplam_adim (int): Toplam adım sayısı
+            adim (dict): Adim bilgisi
+            mevcut_indeks (int): Mevcut adim indexi (0-based)
+            toplam_adim (int): Toplam adim sayisi
         """
         if adim:
-            self.adim_basligi.setText(adim.get('baslik', 'Başlık yok'))
-            self.adim_aciklamasi.setPlainText(adim.get('aciklama', 'Açıklama yok'))
+            self.adim_basligi.setText(adim.get('baslik', 'Baslik yok'))
+            self.adim_aciklamasi.setPlainText(adim.get('aciklama', 'Aciklama yok'))
         else:
-            self.adim_basligi.setText("Adım yok")
+            self.adim_basligi.setText("Adim yok")
             self.adim_aciklamasi.setPlainText("")
 
-        # İlerleme güncelle
+        # Ilerleme guncelle
         if toplam_adim > 0:
             ilerleme = int(((mevcut_indeks + 1) / toplam_adim) * 100)
             self.ilerleme_cubugu.setValue(ilerleme)
-            self.ilerleme_etiketi.setText(f"Adım {mevcut_indeks + 1} / {toplam_adim}")
+            self.ilerleme_etiketi.setText(f"Adim {mevcut_indeks + 1} / {toplam_adim}")
         else:
             self.ilerleme_cubugu.setValue(0)
-            self.ilerleme_etiketi.setText("Adım 0 / 0")
+            self.ilerleme_etiketi.setText("Adim 0 / 0")
 
-        # Buton durumları
+        # Buton durumlari
         self.btn_ilk.setEnabled(mevcut_indeks > 0)
         self.btn_onceki.setEnabled(mevcut_indeks > 0)
         self.btn_sonraki.setEnabled(mevcut_indeks < toplam_adim - 1)
         self.btn_son.setEnabled(mevcut_indeks < toplam_adim - 1)
 
-        # Listede seç
+        # Listede sec
         if 0 <= mevcut_indeks < self.adimlar_listesi.count():
             self.adimlar_listesi.setCurrentRow(mevcut_indeks)
 
     def adimlari_yukle(self, adimlar):
-        """Adım listesini yükle"""
+        """Adim listesini yukle"""
         self.adimlar_listesi.clear()
         for i, adim in enumerate(adimlar):
-            self.adimlar_listesi.addItem(f"{i+1}. {adim.get('baslik', 'İsimsiz')}")
+            self.adimlar_listesi.addItem(f"{i+1}. {adim.get('baslik', 'Isimsiz')}")
 
     def parcalari_yukle(self, parcalar):
-        """Parça listesini yükle"""
+        """Parca listesini yukle"""
         self.parcalar_listesi.clear()
         for parca in parcalar:
-            self.parcalar_listesi.addItem(f"{parca.get('isim', 'İsimsiz')} [{parca.get('id')}]")
+            self.parcalar_listesi.addItem(f"{parca.get('isim', 'Isimsiz')} [{parca.get('id')}]")
 
-    def ilk_tiklandı(self):
-        """İlk adıma git"""
+    def ilk_tiklandi(self):
+        """Ilk adima git"""
         self.adim_degisti.emit(0)
 
-    def onceki_tiklandı(self):
-        """Önceki adım"""
-        self.adim_degisti.emit(-1)  # -1 = önceki
+    def onceki_tiklandi(self):
+        """Onceki adim"""
+        self.adim_degisti.emit(-1)  # -1 = onceki
 
-    def sonraki_tiklandı(self):
-        """Sonraki adım"""
+    def sonraki_tiklandi(self):
+        """Sonraki adim"""
         self.adim_degisti.emit(1)  # 1 = sonraki
 
-    def son_tiklandı(self):
-        """Son adıma git"""
-        self.adim_degisti.emit(9999)  # Büyük sayı = son
+    def son_tiklandi(self):
+        """Son adima git"""
+        self.adim_degisti.emit(9999)  # Buyuk sayi = son
 
     def adim_listesi_degisti(self, indeks):
-        """Liste üzerinden adım değiştirildi"""
+        """Liste uzerinden adim degistirildi"""
         if indeks >= 0:
-            self.adim_degisti.emit(indeks + 100)  # +100 = direkt adım
+            self.adim_degisti.emit(indeks + 100)  # +100 = direkt adim
 
     def parca_secildi_slot(self, metin):
-        """Parça seçildi"""
+        """Parca secildi"""
         if metin:
-            # ID'yi ayıkla [id] formatından
+            # ID'yi ayikla [id] formatindan
             parca_id = metin.split('[')[-1].replace(']', '').strip()
             self.parca_secildi.emit(parca_id)

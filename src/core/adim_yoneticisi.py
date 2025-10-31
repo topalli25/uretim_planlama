@@ -1,10 +1,10 @@
 """
-Montaj adımlarını yönetir
+Montaj adimlarini yonetir
 """
 
 
 class AdimYoneticisi:
-    """Montaj adımlarını kontrol eder"""
+    """Montaj adimlarini kontrol eder"""
 
     def __init__(self, montaj_verisi=None):
         self.montaj_verisi = montaj_verisi
@@ -16,13 +16,13 @@ class AdimYoneticisi:
 
     def adimlari_yukle(self, adimlar):
         """
-        Adımları yükle
+        Adimlari yukle
 
-        Adım formatı:
+        Adim formati:
         {
             "adim_numarasi": 1,
-            "baslik": "Tabanı yerleştir",
-            "aciklama": "Taban parçasını iş tezgahına sabitle",
+            "baslik": "Tabani yerlestir",
+            "aciklama": "Taban parcasini is tezgahina sabitle",
             "gorunur_parcalar": ["parca_001"],
             "vurgulu_parcalar": ["parca_001"],
             "kamera_pozisyonu": [0, 0, 100],
@@ -33,27 +33,27 @@ class AdimYoneticisi:
         self.mevcut_adim_indeksi = 0
 
     def mevcut_adimi_al(self):
-        """Mevcut adımı döndür"""
+        """Mevcut adimi dondur"""
         if 0 <= self.mevcut_adim_indeksi < len(self.adimlar):
             return self.adimlar[self.mevcut_adim_indeksi]
         return None
 
     def sonraki_adim(self):
-        """Sonraki adıma geç"""
+        """Sonraki adima gec"""
         if self.mevcut_adim_indeksi < len(self.adimlar) - 1:
             self.mevcut_adim_indeksi += 1
             return True
         return False
 
     def onceki_adim(self):
-        """Önceki adıma geç"""
+        """Onceki adima gec"""
         if self.mevcut_adim_indeksi > 0:
             self.mevcut_adim_indeksi -= 1
             return True
         return False
 
     def adima_git(self, adim_numarasi):
-        """Belirli bir adıma git (1-based index)"""
+        """Belirli bir adima git (1-based index)"""
         indeks = adim_numarasi - 1
         if 0 <= indeks < len(self.adimlar):
             self.mevcut_adim_indeksi = indeks
@@ -61,34 +61,34 @@ class AdimYoneticisi:
         return False
 
     def adim_sayisi_al(self):
-        """Toplam adım sayısı"""
+        """Toplam adim sayisi"""
         return len(self.adimlar)
 
     def ilerleme_al(self):
-        """İlerleme yüzdesi (0-100)"""
+        """Ilerleme yuzdesi (0-100)"""
         if len(self.adimlar) == 0:
             return 0
         return int((self.mevcut_adim_indeksi / len(self.adimlar)) * 100)
 
     def ilk_adim_mi(self):
-        """İlk adımda mıyız?"""
+        """Ilk adimda miyiz?"""
         return self.mevcut_adim_indeksi == 0
 
     def son_adim_mi(self):
-        """Son adımda mıyız?"""
+        """Son adimda miyiz?"""
         return self.mevcut_adim_indeksi == len(self.adimlar) - 1
 
     def tum_adimlari_al(self):
-        """Tüm adımları döndür"""
+        """Tum adimlari dondur"""
         return self.adimlar
 
     def ornek_adimlar_olustur(self):
-        """Örnek adımlar oluştur"""
+        """Ornek adimlar olustur"""
         return [
             {
                 "adim_numarasi": 1,
-                "baslik": "Adım 1: Tabanı Hazırla",
-                "aciklama": "Taban parçasını alın ve iş tezgahına yerleştirin.",
+                "baslik": "Adim 1: Tabani Hazirla",
+                "aciklama": "Taban parcasini alin ve is tezgahina yerlestirin.",
                 "gorunur_parcalar": ["parca_001"],
                 "vurgulu_parcalar": ["parca_001"],
                 "kamera_pozisyonu": [0, 0, 100],
@@ -96,8 +96,8 @@ class AdimYoneticisi:
             },
             {
                 "adim_numarasi": 2,
-                "baslik": "Adım 2: Gövdeyi Takın",
-                "aciklama": "Gövde parçasını taban üzerine yerleştirin ve 4 adet M6 cıvata ile sabitleyin.",
+                "baslik": "Adim 2: Govdeyi Takin",
+                "aciklama": "Govde parcasini taban uzerine yerlestirin ve 4 adet M6 civata ile sabitleyin.",
                 "gorunur_parcalar": ["parca_001", "parca_002"],
                 "vurgulu_parcalar": ["parca_002"],
                 "kamera_pozisyonu": [50, 50, 100],
@@ -105,8 +105,8 @@ class AdimYoneticisi:
             },
             {
                 "adim_numarasi": 3,
-                "baslik": "Adım 3: Kapağı Kapat",
-                "aciklama": "Kapak parçasını üst kısma yerleştirin ve 2 adet M4 cıvata ile emniyete alın.",
+                "baslik": "Adim 3: Kapagi Kapat",
+                "aciklama": "Kapak parcasini ust kisma yerlestirin ve 2 adet M4 civata ile emniyete alin.",
                 "gorunur_parcalar": ["parca_001", "parca_002", "parca_003"],
                 "vurgulu_parcalar": ["parca_003"],
                 "kamera_pozisyonu": [0, -50, 120],

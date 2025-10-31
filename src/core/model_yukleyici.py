@@ -1,6 +1,6 @@
 """
-3D model dosyalarını yükleyen modül
-STEP ve STL formatlarını destekler (STEP öncelikli)
+3D model dosyalarini yukleyen modul
+STEP ve STL formatlarini destekler (STEP oncelikli)
 """
 import os
 import trimesh
@@ -9,37 +9,37 @@ from pathlib import Path
 
 
 class ModelYukleyici:
-    """3D model dosyalarını yükler ve işler"""
+    """3D model dosyalarini yukler ve isler"""
 
     def __init__(self):
-        # STEP formatı öncelikli, sonra STL
+        # STEP formati oncelikli, sonra STL
         self.desteklenen_formatlar = ['.step', '.stp', '.STEP', '.STP', '.stl', '.STL']
 
     def model_yukle(self, dosya_yolu):
         """
-        3D model dosyasını yükle
+        3D model dosyasini yukle
 
         Args:
-            dosya_yolu (str): Model dosyasının yolu
+            dosya_yolu (str): Model dosyasinin yolu
 
         Returns:
-            trimesh.Trimesh: Yüklenmiş 3D model
+            trimesh.Trimesh: Yuklenmis 3D model
         """
         dosya_yolu = Path(dosya_yolu)
 
         if not dosya_yolu.exists():
-            raise FileNotFoundError(f"Model dosyası bulunamadı: {dosya_yolu}")
+            raise FileNotFoundError(f"Model dosyasi bulunamadi: {dosya_yolu}")
 
         if dosya_yolu.suffix not in self.desteklenen_formatlar:
-            raise ValueError(f"Desteklenmeyen dosya formatı: {dosya_yolu.suffix}")
+            raise ValueError(f"Desteklenmeyen dosya formati: {dosya_yolu.suffix}")
 
         try:
-            # trimesh ile modeli yükle
+            # trimesh ile modeli yukle
             mesh = trimesh.load(str(dosya_yolu))
 
-            # Eğer Scene ise ilk mesh'i al
+            # Eger Scene ise ilk mesh'i al
             if isinstance(mesh, trimesh.Scene):
-                # Scene içindeki tüm geometrileri birleştir
+                # Scene icindeki tum geometrileri birlestir
                 meshler = []
                 for geometri in mesh.geometry.values():
                     if isinstance(geometri, trimesh.Trimesh):
@@ -47,22 +47,22 @@ class ModelYukleyici:
                 if meshler:
                     mesh = trimesh.util.concatenate(meshler)
                 else:
-                    raise ValueError("Scene içinde geçerli mesh bulunamadı")
+                    raise ValueError("Scene icinde gecerli mesh bulunamadi")
 
             return mesh
 
         except Exception as e:
-            raise Exception(f"Model yüklenirken hata: {str(e)}")
+            raise Exception(f"Model yuklenirken hata: {str(e)}")
 
     def coklu_model_yukle(self, dosya_yollari):
         """
-        Birden fazla model dosyasını yükle
+        Birden fazla model dosyasini yukle
 
         Args:
-            dosya_yollari (list): Model dosyalarının yolları
+            dosya_yollari (list): Model dosyalarinin yollari
 
         Returns:
-            dict: {dosya_adi: mesh} sözlüğü
+            dict: {dosya_adi: mesh} sozlugu
         """
         modeller = {}
         for dosya_yolu in dosya_yollari:
@@ -70,13 +70,13 @@ class ModelYukleyici:
             try:
                 modeller[isim] = self.model_yukle(dosya_yolu)
             except Exception as e:
-                print(f"Hata: {isim} yüklenemedi - {str(e)}")
+                print(f"Hata: {isim} yuklenemedi - {str(e)}")
 
         return modeller
 
     def model_bilgisi_al(self, mesh):
         """
-        Model hakkında bilgi döndür
+        Model hakkinda bilgi dondur
 
         Args:
             mesh (trimesh.Trimesh): 3D model

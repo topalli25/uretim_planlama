@@ -21,20 +21,20 @@ class AnaPencere(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Config yükle
+        # Config yukle
         self.konfig = konfig_al()
 
-        # Modüller
+        # Moduller
         self.model_yukleyici = ModelYukleyici()
         self.montaj_yoneticisi = MontajYoneticisi()
         self.adim_yoneticisi = AdimYoneticisi()
         self.yuklenmis_modeller = {}  # parca_id: mesh
 
-        # UI oluştur
+        # UI olustur
         self.arayuzu_olustur()
 
     def arayuzu_olustur(self):
-        """UI elemanlarını oluştur"""
+        """UI elemanlarini olustur"""
         self.setWindowTitle(self.konfig['app']['name'])
         self.setGeometry(100, 100,
                         self.konfig['app']['window_width'],
@@ -62,43 +62,43 @@ class AnaPencere(QMainWindow):
         self.kontrol_paneli.parca_secildi.connect(self.parca_secildi_slot)
         bolme.addWidget(self.kontrol_paneli)
 
-        # Splitter oranı (70% viewer, 30% panel)
+        # Splitter orani (70% viewer, 30% panel)
         bolme.setStretchFactor(0, 7)
         bolme.setStretchFactor(1, 3)
 
         ana_layout.addWidget(bolme)
 
-        # Menü bar
+        # Menu bar
         self.menu_cubugunu_olustur()
 
         # Status bar
         self.durum_cubugu = QStatusBar()
         self.setStatusBar(self.durum_cubugu)
-        self.durum_cubugu.showMessage("Hazır")
+        self.durum_cubugu.showMessage("Hazir")
 
     def menu_cubugunu_olustur(self):
-        """Menü çubuğunu oluştur"""
+        """Menu cubugunu olustur"""
         menubar = self.menuBar()
 
-        # Dosya menüsü
+        # Dosya menusu
         dosya_menusu = menubar.addMenu("Dosya")
 
-        ac_aksiyonu = QAction("Montaj Aç...", self)
+        ac_aksiyonu = QAction("Montaj Ac...", self)
         ac_aksiyonu.setShortcut("Ctrl+O")
         ac_aksiyonu.triggered.connect(self.montaj_ac)
         dosya_menusu.addAction(ac_aksiyonu)
 
         dosya_menusu.addSeparator()
 
-        cikis_aksiyonu = QAction("Çıkış", self)
+        cikis_aksiyonu = QAction("Cikis", self)
         cikis_aksiyonu.setShortcut("Ctrl+Q")
         cikis_aksiyonu.triggered.connect(self.close)
         dosya_menusu.addAction(cikis_aksiyonu)
 
-        # Görünüm menüsü
-        gorunum_menusu = menubar.addMenu("Görünüm")
+        # Gorunum menusu
+        gorunum_menusu = menubar.addMenu("Gorunum")
 
-        kamera_sifirla_aksiyonu = QAction("Kamerayı Sıfırla", self)
+        kamera_sifirla_aksiyonu = QAction("Kamerayi Sifirla", self)
         kamera_sifirla_aksiyonu.setShortcut("R")
         kamera_sifirla_aksiyonu.triggered.connect(self.gorunum.kamerayi_sifirla)
         gorunum_menusu.addAction(kamera_sifirla_aksiyonu)
@@ -109,63 +109,63 @@ class AnaPencere(QMainWindow):
         tam_ekran_aksiyonu.triggered.connect(self.tam_ekran_degistir)
         gorunum_menusu.addAction(tam_ekran_aksiyonu)
 
-        # Yardım menüsü
-        yardim_menusu = menubar.addMenu("Yardım")
+        # Yardim menusu
+        yardim_menusu = menubar.addMenu("Yardim")
 
-        hakkinda_aksiyonu = QAction("Hakkında", self)
+        hakkinda_aksiyonu = QAction("Hakkinda", self)
         hakkinda_aksiyonu.triggered.connect(self.hakkinda_goster)
         yardim_menusu.addAction(hakkinda_aksiyonu)
 
     def montaj_ac(self):
-        """Montaj dosyası aç"""
+        """Montaj dosyasi ac"""
         proje_koku = proje_kok_dizini_al()
         montaj_dizini = proje_koku / self.konfig['paths']['assemblies_dir']
 
         dosya_yolu, _ = QFileDialog.getOpenFileName(
             self,
-            "Montaj Dosyası Seç",
+            "Montaj Dosyasi Sec",
             str(montaj_dizini),
-            "JSON Dosyaları (*.json)"
+            "JSON Dosyalari (*.json)"
         )
 
         if dosya_yolu:
             try:
                 self.montaj_yukle(dosya_yolu)
-                self.durum_cubugu.showMessage(f"Montaj yüklendi: {dosya_yolu}")
+                self.durum_cubugu.showMessage(f"Montaj yuklendi: {dosya_yolu}")
             except Exception as e:
-                QMessageBox.critical(self, "Hata", f"Montaj yüklenemedi:\n{str(e)}")
+                QMessageBox.critical(self, "Hata", f"Montaj yuklenemedi:\n{str(e)}")
 
     def montaj_yukle(self, montaj_dosyasi):
         """
-        Montaj dosyasını yükle ve görselleştir
+        Montaj dosyasini yukle ve gorsellestir
 
         Args:
-            montaj_dosyasi (str): Montaj JSON dosyasının yolu
+            montaj_dosyasi (str): Montaj JSON dosyasinin yolu
         """
-        # Montaj bilgilerini yükle
+        # Montaj bilgilerini yukle
         montaj_verisi = self.montaj_yoneticisi.montaj_yukle(montaj_dosyasi)
 
-        # Adımları yükle
+        # Adimlari yukle
         self.adim_yoneticisi.adimlari_yukle(montaj_verisi.get('adimlar', []))
 
-        # 3D modelleri yükle
+        # 3D modelleri yukle
         self.modelleri_yukle()
 
-        # UI'ı güncelle
+        # UI'i guncelle
         self.kontrol_paneli.adimlari_yukle(self.adim_yoneticisi.tum_adimlari_al())
         self.kontrol_paneli.parcalari_yukle(self.montaj_yoneticisi.tum_parcalari_al())
 
-        # İlk adımı göster
+        # Ilk adimi goster
         if self.adim_yoneticisi.adim_sayisi_al() > 0:
             self.adim_gorunumunu_guncelle()
 
         self.durum_cubugu.showMessage(
-            f"Montaj yüklendi: {montaj_verisi['isim']} "
-            f"({len(self.yuklenmis_modeller)} parça)"
+            f"Montaj yuklendi: {montaj_verisi['isim']} "
+            f"({len(self.yuklenmis_modeller)} parca)"
         )
 
     def modelleri_yukle(self):
-        """Montajdaki tüm 3D modelleri yükle"""
+        """Montajdaki tum 3D modelleri yukle"""
         proje_koku = proje_kok_dizini_al()
         model_dizini = proje_koku / self.konfig['paths']['models_dir']
 
@@ -178,7 +178,7 @@ class AnaPencere(QMainWindow):
             renk = tuple(parca.get('renk', [0.8, 0.8, 0.8]))
 
             try:
-                # Model dosyasını yükle
+                # Model dosyasini yukle
                 model_yolu = model_dizini / model_dosyasi
                 mesh = self.model_yukleyici.model_yukle(model_yolu)
                 self.yuklenmis_modeller[parca_id] = mesh
@@ -186,39 +186,39 @@ class AnaPencere(QMainWindow):
                 # Viewer'a ekle
                 self.gorunum.mesh_ekle(parca_id, mesh, renk=renk)
 
-                # Görünürlük ayarla
+                # Gorunurluk ayarla
                 gorunur = parca.get('gorunur', True)
                 self.gorunum.mesh_gorunurlugunu_ayarla(parca_id, gorunur)
 
             except Exception as e:
-                print(f"Model yüklenemedi [{parca_id}]: {str(e)}")
+                print(f"Model yuklenemedi [{parca_id}]: {str(e)}")
 
         self.gorunum.kamerayi_sifirla()
 
     def adim_gorunumunu_guncelle(self):
-        """Mevcut adıma göre görünümü güncelle"""
+        """Mevcut adima gore gorunumu guncelle"""
         mevcut_adim = self.adim_yoneticisi.mevcut_adimi_al()
         mevcut_indeks = self.adim_yoneticisi.mevcut_adim_indeksi
         toplam_adim = self.adim_yoneticisi.adim_sayisi_al()
 
-        # Kontrol panelini güncelle
+        # Kontrol panelini guncelle
         self.kontrol_paneli.adim_bilgisini_guncelle(mevcut_adim, mevcut_indeks, toplam_adim)
 
         if not mevcut_adim:
             return
 
-        # Parça görünürlüklerini güncelle
+        # Parca gorunurluklerini guncelle
         gorunur_parcalar = mevcut_adim.get('gorunur_parcalar', [])
         for parca_id in self.yuklenmis_modeller.keys():
             self.gorunum.mesh_gorunurlugunu_ayarla(parca_id, parca_id in gorunur_parcalar)
 
-        # Vurgulanan parçalar
+        # Vurgulanan parcalar
         vurgulu_parcalar = mevcut_adim.get('vurgulu_parcalar', [])
         for parca_id in self.yuklenmis_modeller.keys():
             if parca_id in vurgulu_parcalar:
                 self.gorunum.mesh_vurgula(parca_id, True)
             else:
-                # Orijinal renge dön
+                # Orijinal renge don
                 parca = self.montaj_yoneticisi.parca_al(parca_id)
                 if parca:
                     renk = tuple(parca.get('renk', [0.8, 0.8, 0.8]))
@@ -230,28 +230,28 @@ class AnaPencere(QMainWindow):
             self.gorunum.kamera_pozisyonunu_ayarla(kamera_poz, [0, 0, 0])
 
     def adim_degisti_slot(self, deger):
-        """Adım değiştirildiğinde"""
+        """Adim degistirildiginde"""
         if deger == -1:
-            # Önceki
+            # Onceki
             self.adim_yoneticisi.onceki_adim()
         elif deger == 1:
             # Sonraki
             self.adim_yoneticisi.sonraki_adim()
         elif deger == 0:
-            # İlk
+            # Ilk
             self.adim_yoneticisi.adima_git(1)
         elif deger == 9999:
             # Son
             self.adim_yoneticisi.adima_git(self.adim_yoneticisi.adim_sayisi_al())
         elif deger >= 100:
-            # Direkt adım (liste seçimi)
+            # Direkt adim (liste secimi)
             self.adim_yoneticisi.adima_git(deger - 99)
 
         self.adim_gorunumunu_guncelle()
 
     def parca_secildi_slot(self, parca_id):
-        """Parça seçildiğinde"""
-        # Parçayı vurgula
+        """Parca secildiginde"""
+        # Parcayi vurgula
         for pid in self.yuklenmis_modeller.keys():
             if pid == parca_id:
                 self.gorunum.mesh_vurgula(pid, True)
@@ -262,29 +262,29 @@ class AnaPencere(QMainWindow):
                     self.gorunum.mesh_rengini_ayarla(pid, renk)
 
     def tam_ekran_degistir(self, secildi):
-        """Tam ekran modunu aç/kapat"""
+        """Tam ekran modunu ac/kapat"""
         if secildi:
             self.showFullScreen()
         else:
             self.showNormal()
 
     def hakkinda_goster(self):
-        """Hakkında diyaloğu"""
+        """Hakkinda diyalogu"""
         QMessageBox.about(
             self,
-            "Hakkında",
+            "Hakkinda",
             f"{self.konfig['app']['name']}\n"
             f"Versiyon: {self.konfig['app']['version']}\n\n"
-            "3D montaj kılavuzu uygulaması\n"
-            "SolidWorks CAD dosyalarından oluşturulan montaj talimatları"
+            "3D montaj kilavuzu uygulamasi\n"
+            "SolidWorks CAD dosyalarindan olusturulan montaj talimatlari"
         )
 
     def closeEvent(self, event):
-        """Pencere kapatıldığında"""
+        """Pencere kapatildiginda"""
         yanit = QMessageBox.question(
             self,
-            'Çıkış',
-            'Uygulamadan çıkmak istediğinize emin misiniz?',
+            'Cikis',
+            'Uygulamadan cikmak istediginize emin misiniz?',
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No
         )

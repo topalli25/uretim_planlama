@@ -1,5 +1,5 @@
 """
-VTK tabanlı 3D görselleştirme widget'ı
+VTK tabanli 3D gorsellestirme widget'i
 """
 from PyQt6.QtWidgets import QWidget, QVBoxLayout
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
@@ -7,7 +7,7 @@ import vtk
 
 
 class GorunumWidget(QWidget):
-    """VTK 3D görüntüleyici widget"""
+    """VTK 3D goruntule widget"""
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -33,34 +33,34 @@ class GorunumWidget(QWidget):
         self.interactor_stili = vtk.vtkInteractorStyleTrackballCamera()
         self.interactor.SetInteractorStyle(self.interactor_stili)
 
-        # Aktörler sözlüğü (parca_id: actor)
+        # Aktorler sozlugu (parca_id: actor)
         self.aktorler = {}
 
-        # Kamera ayarları
+        # Kamera ayarlari
         self.kamerayi_ayarla()
 
         # Initialize
         self.interactor.Initialize()
 
     def kamerayi_ayarla(self):
-        """Kamera başlangıç ayarları"""
+        """Kamera baslangic ayarlari"""
         kamera = self.renderer.GetActiveCamera()
         kamera.SetPosition(100, 100, 100)
         kamera.SetFocalPoint(0, 0, 0)
         kamera.SetViewUp(0, 0, 1)
         self.renderer.ResetCamera()
 
-    def mesh_ekle(self, parca_id, mesh, renk=(0.8, 0.8, 0.8), opaklık=1.0):
+    def mesh_ekle(self, parca_id, mesh, renk=(0.8, 0.8, 0.8), opaklik=1.0):
         """
         Trimesh nesnesini sahneye ekle
 
         Args:
-            parca_id (str): Parça ID
+            parca_id (str): Parca ID
             mesh (trimesh.Trimesh): 3D mesh
-            renk (tuple): RGB renk (0-1 arası)
-            opaklık (float): Opaklık (0-1 arası)
+            renk (tuple): RGB renk (0-1 arasi)
+            opaklik (float): Opaklik (0-1 arasi)
         """
-        # Trimesh'i VTK'ya dönüştür
+        # Trimesh'i VTK'ya donustur
         noktalar = mesh.vertices
         yuzeyler = mesh.faces
 
@@ -83,7 +83,7 @@ class GorunumWidget(QWidget):
         poly_data.SetPoints(vtk_noktalar)
         poly_data.SetPolys(vtk_hucreler)
 
-        # Normals hesapla (daha iyi görünüm için)
+        # Normals hesapla (daha iyi gorunum icin)
         normaller = vtk.vtkPolyDataNormals()
         normaller.SetInputData(poly_data)
         normaller.ComputePointNormalsOn()
@@ -97,7 +97,7 @@ class GorunumWidget(QWidget):
         aktor = vtk.vtkActor()
         aktor.SetMapper(mapper)
         aktor.GetProperty().SetColor(renk)
-        aktor.GetProperty().SetOpacity(opaklık)
+        aktor.GetProperty().SetOpacity(opaklik)
 
         # Sahneye ekle
         self.renderer.AddActor(aktor)
@@ -107,44 +107,44 @@ class GorunumWidget(QWidget):
         self.render_window.Render()
 
     def mesh_kaldir(self, parca_id):
-        """Mesh'i sahneden kaldır"""
+        """Mesh'i sahneden kaldir"""
         if parca_id in self.aktorler:
             self.renderer.RemoveActor(self.aktorler[parca_id])
             del self.aktorler[parca_id]
             self.render_window.Render()
 
     def mesh_gorunurlugunu_ayarla(self, parca_id, gorunur):
-        """Mesh görünürlüğünü ayarla"""
+        """Mesh gorunurlugunu ayarla"""
         if parca_id in self.aktorler:
             self.aktorler[parca_id].SetVisibility(gorunur)
             self.render_window.Render()
 
     def mesh_rengini_ayarla(self, parca_id, renk):
-        """Mesh rengini değiştir"""
+        """Mesh rengini degistir"""
         if parca_id in self.aktorler:
             self.aktorler[parca_id].GetProperty().SetColor(renk)
             self.render_window.Render()
 
     def mesh_vurgula(self, parca_id, vurgula=True):
-        """Mesh'i vurgula (parlak sarı renk)"""
+        """Mesh'i vurgula (parlak sari renk)"""
         if parca_id in self.aktorler:
             if vurgula:
                 self.aktorler[parca_id].GetProperty().SetColor(1.0, 1.0, 0.0)
                 self.aktorler[parca_id].GetProperty().SetOpacity(1.0)
             else:
-                # Orijinal renge dön (bu durumda gri)
+                # Orijinal renge don (bu durumda gri)
                 self.aktorler[parca_id].GetProperty().SetColor(0.8, 0.8, 0.8)
             self.render_window.Render()
 
     def sahneyi_temizle(self):
-        """Tüm mesh'leri temizle"""
+        """Tum mesh'leri temizle"""
         for aktor in list(self.aktorler.values()):
             self.renderer.RemoveActor(aktor)
         self.aktorler.clear()
         self.render_window.Render()
 
     def kamerayi_sifirla(self):
-        """Kamerayı sıfırla"""
+        """Kamerayi sifirla"""
         self.renderer.ResetCamera()
         self.render_window.Render()
 
@@ -154,7 +154,7 @@ class GorunumWidget(QWidget):
 
         Args:
             pozisyon (list): [x, y, z] kamera pozisyonu
-            odak_noktasi (list): [x, y, z] odak noktası (opsiyonel)
+            odak_noktasi (list): [x, y, z] odak noktasi (opsiyonel)
         """
         kamera = self.renderer.GetActiveCamera()
         kamera.SetPosition(pozisyon)
@@ -164,5 +164,5 @@ class GorunumWidget(QWidget):
         self.render_window.Render()
 
     def mesh_sayisi_al(self):
-        """Sahnedeki mesh sayısı"""
+        """Sahnedeki mesh sayisi"""
         return len(self.aktorler)
