@@ -1,0 +1,14 @@
+# GUI Framework
+PyQt6==6.6.1
+PyQt6-Qt6==6.6.1
+
+# 3D Visualization
+vtk==9.3.0
+
+# 3D File Processing
+trimesh==4.0.5
+numpy-stl==3.1.1
+numpy==1.26.2
+
+# Utilities
+Pillow==10.1.0

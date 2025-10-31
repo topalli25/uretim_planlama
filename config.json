@@ -1,0 +1,18 @@
+{
+  "app": {
+    "name": "3D Montaj Kılavuzu",
+    "version": "1.0.0",
+    "fullscreen": false,
+    "window_width": 1920,
+    "window_height": 1080
+  },
+  "viewer": {
+    "background_color": [0.2, 0.3, 0.4],
+    "default_camera_position": [0, 0, 100],
+    "enable_antialiasing": true
+  },
+  "paths": {
+    "models_dir": "data/models",
+    "assemblies_dir": "data/assemblies"
+  }
+}
