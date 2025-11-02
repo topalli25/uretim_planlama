@@ -37,9 +37,26 @@ pip install -r requirements.txt
 
 ## Kullanım
 
+### Ana Uygulama
 ```bash
 python main.py
 ```
+
+### JSON Creator (3D Onizlemeli)
+SolidWorks STEP dosyalarindan montaj JSON olusturmak icin:
+
+```bash
+python tools/json_creator.py
+```
+
+**Ozellikler:**
+- 3D parca onizleme
+- Canli renk guncelleme
+- Adim onizleme ve kamera pozisyonu kaydetme
+- 1000+ parca desteği (cache sistemi)
+- Akilli arama/filtreleme
+
+Detayli kullanim: [docs/JSON_CREATOR_KULLANIM.md](docs/JSON_CREATOR_KULLANIM.md)
 
 ## Proje Yapısı
 
@@ -50,19 +67,24 @@ montaj_kilavuzu/
 ├── config.json                  # Ayarlar
 ├── src/
 │   ├── gui/                     # GUI bileşenleri
-│   │   ├── ana_pencere.py       # Ana pencere (Türkçe)
-│   │   ├── gorunum_widget.py    # 3D görünüm widget
+│   │   ├── ana_pencere.py       # Ana pencere (ASCII)
+│   │   ├── gorunum_widget.py    # 3D görünüm widget (VTK)
 │   │   └── kontrol_paneli.py    # Kontrol paneli
 │   ├── core/                    # İş mantığı
 │   │   ├── model_yukleyici.py   # STEP/STL yükleyici
 │   │   ├── montaj_yoneticisi.py # Montaj yönetimi
 │   │   └── adim_yoneticisi.py   # Adım kontrolü
 │   └── utils/                   # Yardımcı fonksiyonlar
-│       └── yardimcilar.py       # Türkçe yardımcı fonksiyonlar
+│       └── yardimcilar.py       # Yardımcı fonksiyonlar
+├── tools/
+│   └── json_creator.py          # JSON Creator GUI (3D önizlemeli)
+├── docs/
+│   └── JSON_CREATOR_KULLANIM.md # JSON Creator kullanım kılavuzu
 ├── data/
 │   ├── models/                  # 3D model dosyaları (STEP/STL)
 │   └── assemblies/              # Montaj tanımları (JSON)
 └── tests/                       # Test dosyaları
+    └── create_sample_models.py  # Örnek STL oluşturucu
 ```
 
 ## Geliştirici
