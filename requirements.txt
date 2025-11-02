@@ -10,5 +10,10 @@ trimesh==4.0.5
 numpy-stl==3.1.1
 numpy==1.26.2
 
+# STEP dosya desteği icin
+trimesh[easy]  # Ekstra dosya format desteği
+pyassimp       # CAD dosya okuma (STEP icin)
+networkx       # trimesh bagimliligi
+
 # Utilities
 Pillow==10.1.0

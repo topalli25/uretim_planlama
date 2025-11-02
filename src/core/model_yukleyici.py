@@ -33,6 +33,15 @@ class ModelYukleyici:
         if dosya_yolu.suffix not in self.desteklenen_formatlar:
             raise ValueError(f"Desteklenmeyen dosya formati: {dosya_yolu.suffix}")
 
+        # STEP dosyasi ise once STL alternatifi var mi kontrol et
+        uzanti = dosya_yolu.suffix.lower()
+        if uzanti in ['.step', '.stp']:
+            stl_alternatif = dosya_yolu.with_suffix('.stl')
+            if stl_alternatif.exists():
+                print(f"STEP yerine STL alternatifi kullaniliyor: {stl_alternatif.name}")
+                dosya_yolu = stl_alternatif
+                uzanti = '.stl'
+
         try:
             # trimesh ile modeli yukle
             mesh = trimesh.load(str(dosya_yolu))
@@ -52,7 +61,21 @@ class ModelYukleyici:
             return mesh
 
         except Exception as e:
-            raise Exception(f"Model yuklenirken hata: {str(e)}")
+            hata_mesaji = str(e)
+
+            # STEP dosyasi yuklenemiyorsa ozel hata mesaji
+            if uzanti in ['.step', '.stp'] and 'not supported' in hata_mesaji.lower():
+                raise Exception(
+                    f"STEP dosyasi yuklenemedi: {dosya_yolu.name}\n\n"
+                    f"COZUM 1: STL'ye donusturun\n"
+                    f"- SolidWorks'te: File > Save As > STL\n"
+                    f"- FreeCAD: File > Export > Mesh Formats (STL)\n\n"
+                    f"COZUM 2: Ek kutuphaneler yukleyin:\n"
+                    f"pip install trimesh[easy] pyassimp\n\n"
+                    f"Orijinal hata: {hata_mesaji}"
+                )
+
+            raise Exception(f"Model yuklenirken hata: {hata_mesaji}")
 
     def coklu_model_yukle(self, dosya_yollari):
         """

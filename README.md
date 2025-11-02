@@ -87,6 +87,40 @@ montaj_kilavuzu/
     └── create_sample_models.py  # Örnek STL oluşturucu
 ```
 
+## Sorun Giderme
+
+### STEP Dosya Yukleme Hatasi
+
+Eger "File type: step not supported" hatasi aliyorsaniz:
+
+**Hizli Cozum:**
+```bash
+# Ek kutuphaneler yukleyin
+pip install trimesh[easy] pyassimp networkx
+```
+
+**Onerilir Cozum:** STEP dosyalarini STL'ye donusturun
+```bash
+# Toplu donusturme araci
+python tools/step_to_stl_converter.py /path/to/step/klasoru
+```
+
+**Detayli kilavuz:** [docs/STEP_DOSYA_SORUNLARI.md](docs/STEP_DOSYA_SORUNLARI.md)
+
+### Diger Sorunlar
+
+- **Windows encoding:** Tum kod dosyalari ASCII karakterler kullanir
+- **VTK kurulumu:** `pip install vtk`
+- **PyQt6 kurulumu:** `pip install PyQt6`
+
+## Dokumantasyon
+
+- [README.md](README.md) - Genel bilgi
+- [docs/JSON_CREATOR_KULLANIM.md](docs/JSON_CREATOR_KULLANIM.md) - JSON Creator kilavuzu
+- [docs/STEP_DOSYA_SORUNLARI.md](docs/STEP_DOSYA_SORUNLARI.md) - STEP yukleme sorunlari
+- [CHANGELOG.md](CHANGELOG.md) - Versiyon gecmisi
+- [PROJE_DURUMU.md](PROJE_DURUMU.md) - Proje raporu
+
 ## Geliştirici
 
 Proje geliştirilme aşamasındadır.
