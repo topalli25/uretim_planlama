@@ -4,7 +4,29 @@ Bu klasör, SolidWorks VBA öğrenmek ve montaj kilavuzu projesi için hazırlan
 
 ## 📚 İçerik
 
-### 1. **01_Temel_Giris.swp** - Başlangıç Seviyesi
+### ⚠️ **00_En_Basit_Ornek.bas** - SYNTAX ERROR ALANLAR İÇİN! ⭐
+
+**Eğer syntax error alıyorsanız bu dosyayı kullanın!**
+
+- ✅ Late Binding (SolidWorks Type Library gerekmez)
+- ✅ 7 basit test fonksiyonu
+- ✅ Garantili hatasız çalışır
+- ✅ Kopyala-yapıştır yapın, F5 ile çalıştırın
+
+**Testler:**
+1. `Test1_MerhabaDunya()` - VBA çalışıyor mu?
+2. `Test2_SolidWorksVersion()` - Versiyon kontrolü
+3. `Test3_AcikBelge()` - Belge kontrolü
+4. `Test4_ParcaBilgisi()` - Kütle, hacim (parça açın!)
+5. `Test5_STLExport()` - STL export (parça açın!)
+6. `Test6_PropertyYaz()` - Custom property
+7. `Test7_AcikBelgeler()` - Açık dosyaları listele
+
+**ÖNCE BUNU DENEYİN!** Syntax error yoksa 01, 02, 03'e geçin.
+
+---
+
+### 1. **01_Temel_Giris.bas** - Başlangıç Seviyesi
 VBA'ya giriş ve temel SolidWorks API işlemleri.
 
 **Örnekler:**
